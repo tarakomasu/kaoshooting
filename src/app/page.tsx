@@ -19,7 +19,7 @@ export default function Home() {
         setAccel({ x: acc.x, y: acc.y, z: acc.z });
 
         if (lastTimestamp.current !== null) {
-          const dt = (timestamp - lastTimestamp.current) / 1000;
+          const dt = (timestamp - lastTimestamp.current) / 100;
 
           setPosition((prev) => ({
             x: prev.x + (acc?.x ?? 0) * dt * dt / 2,
