@@ -4,9 +4,9 @@
 import { useEffect, useState, useRef } from 'react';
 
 export default function Home() {
-  const [accel, setAccel] = useState({ x: 0, y: 0, z: 0 });
-  const [orientation, setOrientation] = useState({ alpha: 0, beta: 0, gamma: 0 });
-  const [position, setPosition] = useState({ x: 0, y: 0, z: 0 });
+  const [accel, setAccel] = useState<{ x: number; y: number; z: number }>({ x: 0, y: 0, z: 0 });
+  const [orientation, setOrientation] = useState<{ alpha: number; beta: number; gamma: number }>({ alpha: 0, beta: 0, gamma: 0 });
+  const [position, setPosition] = useState<{ x: number; y: number; z: number }>({ x: 0, y: 0, z: 0 });
 
   const lastTimestamp = useRef<number | null>(null);
 
@@ -15,17 +15,16 @@ export default function Home() {
       const acc = event.acceleration;
       const timestamp = event.timeStamp;
 
-      if (acc && acc.x !== null && acc.y !== null && acc.z !== null) {
+      if (acc && acc.x != null && acc.y != null && acc.z != null) {
         setAccel({ x: acc.x, y: acc.y, z: acc.z });
 
-        // 時間差を秒に変換
         if (lastTimestamp.current !== null) {
           const dt = (timestamp - lastTimestamp.current) / 1000;
 
           setPosition((prev) => ({
-            x: prev.x + acc.x * dt * dt / 2,
-            y: prev.y + acc.y * dt * dt / 2,
-            z: prev.z + acc.z * dt * dt / 2,
+            x: prev.x + (acc?.x ?? 0) * dt * dt / 2,
+            y: prev.y + (acc?.y ?? 0) * dt * dt / 2,
+            z: prev.z + (acc?.z ?? 0) * dt * dt / 2,
           }));
         }
 
